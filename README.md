@@ -1,1 +1,1 @@
-GANDU hi
+hi bruda
