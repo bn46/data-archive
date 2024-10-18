@@ -42,7 +42,7 @@ jobs:
     # This job depends on the outcome of the build job.
     if: failure()  # Only run when the build-dockers job fails
     needs: build-dockers
-    uses: bn46/kattu/.github/workflows/reusable-slack-notification.yml@develop
+    uses: bn46/kattu/.github/workflows/docker-build.yml@develop
     with:
       GITHUB_USER: ${{ github.actor }}
       REPOSITORY: ${{ github.repository }}
