@@ -33,9 +33,9 @@ jobs:
     with:
       SERVICE_LOCATION: ${{ matrix.SERVICE_LOCATION }}
       SERVICE_NAME: ${{ matrix.SERVICE_NAME }}
-      GITHUB_USER: ${{ github.event.pull_request.user.login || github.actor }}
-      PR_URL: ${{ github.event.pull_request.html_url || github.event.release.url || github.event.html_url }}
-      PR_TITLE: ${{ github.event.pull_request.title || github.event.release.name || github.ref_name }}
+      GITHUB_USER: ${{ github.event.pull_request.user.login || github.actor || 'unknown' }}
+      PR_URL: ${{ github.event.pull_request.html_url || github.event.release.url || github.event.html_url || 'Not Available' }}
+      PR_TITLE: ${{ github.event.pull_request.title || github.event.release.name || github.ref_name || 'No Title' }}
       REPOSITORY: ${{ github.repository }}
       ACTION: ${{ github.event.action || 'push' }}
     secrets:
