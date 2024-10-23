@@ -40,7 +40,7 @@ jobs:
       #PR_URL: ${{ github.event.pull_request.html_url || 'N/A' }}
       COMMIT:  ${{ github.sha }}
       REPO: ${{ github.repository }}
-      JOB_URL: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
+      JOB_URL: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}/jobs/${{ github.job }}
       MESSAGE: ${{ github.event.head_commit.message || github.event.pull_request.title }}
 
     secrets:
