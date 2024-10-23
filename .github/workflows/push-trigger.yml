@@ -34,7 +34,8 @@ jobs:
       SERVICE_LOCATION: ${{ matrix.SERVICE_LOCATION }}
       SERVICE_NAME: ${{ matrix.SERVICE_NAME }}
       GITHUB_USER: ${{ github.actor }}
-      PR_TITLE: ${{ github.event.pull_request.title || 'N/A' }}
+      WORKFLOW: ${{ github.workflow }}
+      #PR_TITLE: ${{ github.event.pull_request.title || 'N/A' }}
       ACTION: ${{ github.event.action || 'N/A' }}
       #PR_URL: ${{ github.event.pull_request.html_url || 'N/A' }}
       COMMIT:  ${{ github.sha }}
