@@ -36,11 +36,11 @@ jobs:
       GITHUB_USER: ${{ github.actor }}
       PR_TITLE: ${{ github.event.pull_request.title || 'N/A' }}
       ACTION: ${{ github.event.action || 'N/A' }}
-      PR_URL: ${{ github.event.pull_request.html_url || 'N/A' }}
-      COMMIT_URL: https://github.com/${{ github.repository }}/commit/${{ github.sha }}
-      REPO_URL: https://github.com/${{ github.repository }}
+      #PR_URL: ${{ github.event.pull_request.html_url || 'N/A' }}
+      COMMIT:  ${{ github.sha }}
+      REPO: ${{ github.repository }}
       JOB_URL: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
-      MESSAGE_URL: ${{ github.event.pull_request.html_url || github.event.head_commit.url || 'N/A' }}
+      MESSAGE: ${{ github.event.head_commit.message || github.event.pull_request.title }}
 
     secrets:
       DEV_NAMESPACE_DOCKER_HUB: ${{ secrets.DEV_NAMESPACE_DOCKER_HUB }}
