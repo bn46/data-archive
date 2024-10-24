@@ -40,7 +40,7 @@ jobs:
       #PR_URL: https://github.com/${{ github.repository }}/pull/${{ github.event.pull_request.number || 'N/A' }}
       COMMIT:  ${{ github.sha }}
       REPO: ${{ github.repository }}
-      JOB_URL: ${{ contains(github.event_name, 'pull_request') && github.event.pull_request ? format('https://github.com/{0}/pull/{1}', github.repository, github.event.pull_request.number) : 'N/A' }}
+      JOB_URL: ${{ github.event_name == 'pull_request' && github.event.pull_request != null && github.event.pull_request.number != null ? format('https://github.com/{0}/pull/{1}', github.repository, github.event.pull_request.number) }}
       #JOB_URL: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
       MESSAGE: ${{ github.event.head_commit.message || github.event.pull_request.title }}
 
