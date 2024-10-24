@@ -1,0 +1,69 @@
+name: Build data-archive
+
+on:
+  release:
+    types: [published]
+  pull_request:
+    types: [opened, reopened, synchronize]
+  workflow_dispatch:
+    inputs:
+      message:
+        description: 'Message for manually triggering'
+        required: false
+        default: 'Triggered for Updates'
+        type: string
+  push:
+    branches:
+      - master
+      - 1.*
+      - develop
+      - release*
+      - MOSIP*
+
+jobs:
+  build-dockers:
+    strategy:
+      matrix:
+        include:
+          - SERVICE_LOCATION: 'data-archive'
+            SERVICE_NAME: 'data-archive'
+      fail-fast: false
+    name: ${{ matrix.SERVICE_NAME }}
+    uses: bn46org/kattu/.github/workflows/docker-build.yml@develop
+    with:
+      SERVICE_LOCATION: ${{ matrix.SERVICE_LOCATION }}
+      SERVICE_NAME: ${{ matrix.SERVICE_NAME }}
+      GITHUB_USER: ${{ github.actor }}
+      WORKFLOW: ${{ github.workflow }}
+      #PR_TITLE: ${{ github.event.pull_request.title || 'N/A' }}
+      ACTION: ${{ github.event.action || 'N/A' }}
+      #PR_URL: https://github.com/${{ github.repository }}/pull/${{ github.event.pull_request.number || 'N/A' }}
+      COMMIT:  ${{ github.sha }}
+      REPO: ${{ github.repository }}
+      JOB_URL: ${{ github.event.pull_request.html_url || 'N/A' }}
+
+      #JOB_URL: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
+      MESSAGE: ${{ github.event.head_commit.message || github.event.pull_request.title }}
+
+    secrets:
+      DEV_NAMESPACE_DOCKER_HUB: ${{ secrets.DEV_NAMESPACE_DOCKER_HUB }}
+      ACTOR_DOCKER_HUB: ${{ secrets.ACTOR_DOCKER_HUB }}
+      RELEASE_DOCKER_HUB: ${{ secrets.RELEASE_DOCKER_HUB }}
+      GPG_USER_MAP_PASSPHRASE: ${{ secrets.GPG_USER_MAP_PASSPHRASE }}
+      SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+      SLACK_CHANNEL_ID: ${{ secrets.GENERAL_CHANNEL_ID }}
+
+  # notify-slack-on-failure:
+  #   if: failure()
+  #   needs: build-dockers
+  #   uses: bn46org/kattu/.github/workflows/slack-notification.yml@develop
+  #   with:
+  #     GITHUB_USER: ${{ github.actor }}
+  #     REPOSITORY: ${{ github.repository }}
+  #     PR_TITLE: ${{ github.event.pull_request.title || 'N/A' }}
+  #     ACTION: ${{ github.event.action || 'N/A' }}
+  #     PR_URL: ${{ github.event.pull_request.html_url || github.event.release.html_url || 'N/A' }}
+  #   secrets:
+  #     GPG_USER_MAP_PASSPHRASE: ${{ secrets.GPG_USER_MAP_PASSPHRASE }}
+  #     SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+  #     SLACK_CHANNEL_ID: ${{ secrets.GENERAL_CHANNEL_ID }}
