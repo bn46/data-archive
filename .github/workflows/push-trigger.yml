@@ -37,10 +37,11 @@ jobs:
       WORKFLOW: ${{ github.workflow }}
       #PR_TITLE: ${{ github.event.pull_request.title || 'N/A' }}
       ACTION: ${{ github.event.action || 'N/A' }}
-      #PR_URL: ${{ github.event.pull_request.html_url || 'N/A' }}
+      #PR_URL: https://github.com/${{ github.repository }}/pull/${{ github.event.pull_request.number || 'N/A' }}
       COMMIT:  ${{ github.sha }}
       REPO: ${{ github.repository }}
-      JOB_URL: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
+      JOB_URL: https://github.com/${{ github.repository }}/pull/${{ github.event.pull_request.number || 'N/A' }}
+      #JOB_URL: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
       MESSAGE: ${{ github.event.head_commit.message || github.event.pull_request.title }}
 
     secrets:
