@@ -1,5 +1,6 @@
 #!/bin/sh
 # entrypoint.sh
+# test
 set -e
 
 echo "Executing db.sh"
